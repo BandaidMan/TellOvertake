@@ -9,7 +9,7 @@ output = subprocess.check_output(["iwconfig"])
 
 #looping through the output and appending the interface names to the list
 for line in output.splitlines():
-    if "IEEE" in line:
+    if "Ethernet" in line:
         wifi_interfaces.append(line.split()[0])
 
 #printing out the list
