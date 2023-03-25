@@ -2,7 +2,7 @@
 ### Sky Pirates - TellOvertake
 
 ## Introduction
-TellOvertake is a drone hijacking software designed for Tello drones. 
+TellOvertake is a drone hijacking program designed for Tello drones. 
 
 
 ## Project Description
@@ -11,6 +11,9 @@ TellOvertake is a drone hijacking software designed for Tello drones.
 
 ## Group Information
 Aditya Dindi - BBA Cybersecurity - Sophomore
+
 Aidan Kollar - BS Computer Science - Sophomore
+
 Scott Roelker - BS Computer Engineering - Sophomore
+
 Xander Newlun - BBA Cybersecurity - Junior
