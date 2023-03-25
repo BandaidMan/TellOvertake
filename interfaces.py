@@ -44,19 +44,12 @@ for index in range(0, len(wifi_interfaces2), 2):
     tmp_list = [wifi_interfaces2[index], wifi_interfaces2[index+1]]
     wifi_networks.append(tmp_list)
 
-print(wifi_networks)
+for line in wifi_networks: 
+    print(line[0].split()[3])
+    print(line[1].strip()[26:30])
 
-'''
-for line in output.splitlines():
-    if "Name" in line: 
-        wifi_interfaces.append(line)
-'''
-'''
-#looping through the output and appending the interface names to the list
-for line in output.splitlines():
-    if "Ethernet" in line.decode("utf-8"):
-        wifi_interfaces.append(line.decode("utf-8"))
-'''
+
+#print(wifi_networks)
 
 #printing out the list
 #print(wifi_interfaces2[4], wifi_interfaces2[6])
