@@ -48,6 +48,15 @@ while True:
     speed = int(speed * -100)
     yaw = int(yaw * 100)
 
+    if abs(x_axis) <= 10:
+        x_axis = 0
+    if abs(y_axis) <= 10:
+        y_axis = 0
+    if abs(speed) <= 10:
+        speed = 0
+    if abs(yaw) <= 10:
+        yaw = 0
+    
     # Clamp the X and Y axis values to the range -100 to 100
     x_axis = max(-100, min(x_axis, 100))
     y_axis = max(-100, min(y_axis, 100))
@@ -56,4 +65,3 @@ while True:
     
     # Print the X and Y axis values
     print(f"X Axis: {x_axis} Y Axis: {y_axis} Speed: {speed} Yaw: {yaw} D-Pad Up: {dpad_up} D-Pad Down: {dpad_down} D-Pad Left: {dpad_left} D-Pad Right: {dpad_right} A: {a_button} B: {b_button} X: {x_button} Y: {y_button}")
-  #  print(f"Y Axis: {y_axis}")
