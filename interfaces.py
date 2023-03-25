@@ -31,23 +31,37 @@ for x in range(0,2):
     wifi_interfaces2.pop(x)
 
    #wifi_interfaces2.append(line.decode("utf-8").strip().split(": ")[1])
+for line in wifi_interfaces2:
+    if line.strip() == '':
+        wifi_interfaces2.remove(line)
 
 for line in wifi_interfaces2:
-    if line == '':
-        wifi_interfaces2.remove(line)
-    if "Interface name" in str(line):
+    if 'name' in line:
         wifi_interfaces2.remove(line)
 
+for line in wifi_interfaces2:
+    if 'currently visible' in line:
+        wifi_interfaces2.remove(line)
+       
+
+#for line in wifi_interfaces2:
+
+
 wifi_interfaces2 = wifi_interfaces2[0::2]
-wifi_interfaces2 = wifi_interfaces2[ : -1]
+print(len(wifi_interfaces2))
+
+
+
 for index in range(0, len(wifi_interfaces2), 2):
     tmp_list = [wifi_interfaces2[index], wifi_interfaces2[index+1]]
     wifi_networks.append(tmp_list)
 
-for line in wifi_networks: 
-    print(line[0].split()[3])
-    print(line[1].strip()[26:30])
+for line in wifi_networks:
+    
+    line[0] = (line[0].split()[3])
+    line[1] = (line[1].strip()[26:30])
 
+print(wifi_networks)
 
 #print(wifi_networks)
 
