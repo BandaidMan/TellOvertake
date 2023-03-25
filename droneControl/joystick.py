@@ -27,7 +27,7 @@ while True:
 
     # Scale the X and Y axis values from -100 to 100
     x_axis = int(x_axis * 100)
-    y_axis = int(y_axis * 100)
+    y_axis = int(y_axis * -100)
 
     # Clamp the X and Y axis values to the range -100 to 100
     x_axis = max(-100, min(x_axis, 100))
