@@ -44,7 +44,6 @@ wifi_interfaces2 = new_list
 
 
 wifi_interfaces2 = wifi_interfaces2[0::2]
-print(len(wifi_interfaces2))
 
 
 
@@ -57,7 +56,19 @@ for line in wifi_networks:
     line[0] = (line[0].split()[3])
     line[1] = (line[1].strip()[26:30])
 
-print(wifi_networks)
+tello_networks = []
+for line in wifi_networks: #Get all the TELLO Networks and add them to the tello_networks list
+    if "TELLO" in line[0]:
+        tello_networks.append(line)
+
+tmp_list = []
+for item in tello_networks:
+    if item not in tmp_list:
+        tmp_list.append(item)
+
+tello_networks = tmp_list
+
+print(tello_networks)
 
 #print(wifi_networks)
 
