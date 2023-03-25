@@ -2,7 +2,7 @@ import pygame
 
 pygame.init()
 
-# Find the first joystick (controller)
+# Find the first joystick
 joystick = None
 for i in range(pygame.joystick.get_count()):
     j = pygame.joystick.Joystick(i)
