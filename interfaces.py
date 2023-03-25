@@ -16,7 +16,7 @@ for line in output.splitlines():
 #looping through the output and appending the interface names to the list
 for line in output.splitlines():
     if "Ethernet" in line.decode("utf-8"):
-        wifi_interfaces.append(line.split()[0])
+        wifi_interfaces.append(line.split())
 
 #printing out the list
 print(wifi_interfaces)
