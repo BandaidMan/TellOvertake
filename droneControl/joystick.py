@@ -20,22 +20,40 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quit()
+    dpad_up = False
+    dpad_down = False
+    dpad_left = False
+    dpad_right = False
+    
+    # Check for hat motion event
+    if event.type == pygame.JOYHATMOTION:
+        # Read the hat position
+        hat = joystick.get_hat(0)
+        # Check the hat position for each direction
+        dpad_up = hat[1] == 1
+        dpad_down = hat[1] == -1
+        dpad_left = hat[0] == -1
+        dpad_right = hat[0] == 1
+
 
     # Read the joystick X and Y axes
     x_axis = joystick.get_axis(0)
     y_axis = joystick.get_axis(1)
     speed = joystick.get_axis(3)
+    yaw = joystick.get_axis(2)
 
     # Scale the X and Y axis values from -100 to 100
     x_axis = int(x_axis * 100)
     y_axis = int(y_axis * -100)
     speed = int(speed * -100)
+    yaw = int(yaw * 100)
 
     # Clamp the X and Y axis values to the range -100 to 100
     x_axis = max(-100, min(x_axis, 100))
     y_axis = max(-100, min(y_axis, 100))
     speed = max(-100, min(speed, 100))
+    yaw = max(-100, min(yaw, 100))
     
     # Print the X and Y axis values
-    print(f"X Axis: {x_axis} Y Axis: {y_axis} Speed: {speed}")
+    print(f"X Axis: {x_axis} Y Axis: {y_axis} Speed: {speed} Yaw: {yaw} D-Pad Up: {dpad_up} D-Pad Down: {dpad_down} D-Pad Left: {dpad_left} D-Pad Right: {dpad_right}")
   #  print(f"Y Axis: {y_axis}")
