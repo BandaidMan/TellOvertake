@@ -31,17 +31,13 @@ for x in range(0,2):
     wifi_interfaces2.pop(x)
 
    #wifi_interfaces2.append(line.decode("utf-8").strip().split(": ")[1])
+new_list = []
 for line in wifi_interfaces2:
-    if line.strip() == '':
-        wifi_interfaces2.remove(line)
+    if line.strip() != '' and 'name' not in line and 'currently visible' not in line:
+        new_list.append(line)
+        
+wifi_interfaces2 = new_list
 
-for line in wifi_interfaces2:
-    if 'name' in line:
-        wifi_interfaces2.remove(line)
-
-for line in wifi_interfaces2:
-    if 'currently visible' in line:
-        wifi_interfaces2.remove(line)
        
 
 #for line in wifi_interfaces2:
