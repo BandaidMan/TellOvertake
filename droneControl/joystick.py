@@ -65,5 +65,15 @@ def getControllerValues(joystick):
     y_axis = max(-100, min(y_axis, 100))
     speed = max(-100, min(speed, 100))
     yaw = max(-100, min(yaw, 100))
-    print(f"X Axis: {x_axis} Y Axis: {y_axis} Speed: {speed} Yaw: {yaw} D-Pad Up: {dpad_up} D-Pad Down: {dpad_down} D-Pad Left: {dpad_left} D-Pad Right: {dpad_right} A: {a_button} B: {b_button} X: {x_button} Y: {y_button}")
+    print(f"Power: {x_axis} Yaw: {y_axis} Pitch: {speed} Roll: {yaw} D-Pad Up: {dpad_up} D-Pad Down: {dpad_down} D-Pad Left: {dpad_left} D-Pad Right: {dpad_right} A: {a_button} B: {b_button} X: {x_button} Y: {y_button}")
     return [x_axis, y_axis, speed, yaw, dpad_up, dpad_down, dpad_left, dpad_right, a_button, b_button, x_button, y_button]
+
+
+controller = discoverController()
+print(type(controller))
+
+
+if __name__ == '__main__':
+    controller = discoverController()  
+    while True:
+        print(getControllerValues(controller))

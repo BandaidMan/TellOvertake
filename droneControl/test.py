@@ -3,6 +3,7 @@ import cv2
 import pygame
 import numpy as np
 import time
+import joystick
 
 # Speed of the drone
 S = 60
@@ -43,6 +44,9 @@ class FrontEnd(object):
 
 		self.send_rc_control = False
 
+		self.joystickAvailable = False
+		self.joystickObject = None
+
 		# create update timer
 		pygame.time.set_timer(pygame.USEREVENT + 1, 1000 // FPS)
 
@@ -54,7 +58,15 @@ class FrontEnd(object):
 		# In case streaming is on. This happens when we quit this program without the escape key.
 		self.tello.streamoff()
 		self.tello.streamon()
-		pass
+
+		self.joystickObject = joystick.discoverController()
+		if joystick is None:
+			print("Joystick not available! Keyboard only control!")
+		else:
+			print("Joystick available, dual joystick and keyboard control enabled")
+			self.joystickAvailable = True
+
+		
 
 	def run(self):
 
@@ -89,7 +101,7 @@ class FrontEnd(object):
 			frame = frame_read.frame
 
 			# Make a blank window from pygame
-			# battery n. 电池
+			# battery n. 
 			text = "Battery: {}%".format(self.tello.get_battery())
 			cv2.putText(frame, text, (5, 720 - 5),
 				cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
@@ -155,8 +167,14 @@ class FrontEnd(object):
 		""" Update routine. Send velocities to Tello.
 		"""
 		if self.send_rc_control:
-			self.tello.send_rc_control(self.left_right_velocity, self.for_back_velocity,
-				self.up_down_velocity, self.yaw_velocity)
+			if self.joystickAvailable:
+				joystickVals = joystick.getControllerValues(self.joystickObject)
+				#print(joystickVals)
+				self.tello.send_rc_control(joystickVals[1], joystickVals[2],
+					joystickVals[0], joystickVals[3])
+			else:
+				self.tello.send_rc_control(self.left_right_velocity, self.for_back_velocity,
+					self.up_down_velocity, self.yaw_velocity)
 
 
 def main():
