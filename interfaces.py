@@ -74,7 +74,9 @@ def init_setup():
     tello_networks = tmp_list
 
     # Display the list of available Tello networks and prompt the user to select their preferred option
-    print("List of tello interfaces: " + tello_networks)
+    print("List of Available Tello networks: ")
+    print(tello_networks)
+    print()
     for x in range(0, len(tello_networks)):
         print("(" + str(x) + ")", tello_networks[x])
     option = input("Which Tello do you prefer?: ")
