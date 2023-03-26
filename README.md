@@ -34,6 +34,7 @@ The main goals of this project are:
 * Pygame
 
 ### Future Expansions
+* Manage multiple connections simulatniously
 * To deauthenticate users at time of connection to the Tello Wifi to disable all access from the user to the device
 * To add functionality using aircrack-ng and airdump-ng to break the WPA2-Personal encryption on the device.
 * Add functionality to add password when requested to device to keep users from attampting to reconnect while maintaining control.
