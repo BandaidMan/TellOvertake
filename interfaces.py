@@ -4,6 +4,14 @@ import os
 
 #creating a blank list to store the output
 def init_setup():
+    if os.path.isfile("Data/.data"):
+        os.remove("Data/.data")
+    xml_clear = os.listdir("Data/XML/")
+    for item in xml_clear:
+        if item.endswith(".xml"):
+            os.remove(os.path.join("Data/XML/", item))
+
+
     wifi_interfaces = []
     wifi_interfaces2 = []
     wifi_networks = []
@@ -49,8 +57,7 @@ def init_setup():
         wifi_networks.append(tmp_list)
 
     for line in wifi_networks:
-        
-        line[0] = (line[0].split()[3])
+        line[0] = (line[0].split()[len(line[0].split())-1])
         line[1] = (line[1].strip()[26:30])
 
     tello_networks = []
@@ -64,8 +71,6 @@ def init_setup():
             tmp_list.append(item)
 
     tello_networks = tmp_list
-    tello_networks.append(['TELLO-AC2C9F', 'Open'])
-    tello_networks.append(['TELLO', 'Open'])
     print(tello_networks)
     print(len(tello_networks))
 
@@ -77,9 +82,9 @@ def init_setup():
 
     for x in range(0, len(wifi_interfaces)):
         print("(" + str(x) + ")", wifi_interfaces[x])
-        option = input("What interface do you prefer?: ")
-        with open("Data/.data", "a") as outfile:
-            outfile.write(wifi_interfaces[x] + "\n")
+    option = input("What interface do you prefer?: ")
+    with open("Data/.data", "a") as outfile:
+        outfile.write(wifi_interfaces[int(option)] + "\n")
     
     data_line = ""
     for x in tello_networks:
@@ -90,22 +95,44 @@ def init_setup():
 #save_input_in_file()
 
 def generate_XML():
-    test = [["Tello-42441", "Open"], "Tello-51883", "WPA2-Personal"]
-        for item in test:
-            if(item[1] == "Open"):
-                path = 'Data/XML/' + item[0] + '.xml'
-                if os.path.isfile(path):
-                    print("XML Exists -- Moving on")
-                else:
-                    unsecured_temp_file = open('Data/XML/profile-xml-unsecured-template.xml', 'r')
-                    xml_lines = unsecured_temp_file.readlines()
+    data = read_data()
+    networks = data[2]
+    for item in networks:
+        if(item[1] == "Open"):
+            path = 'Data/XML/' + item[0] + '.xml'
+            if os.path.isfile(path):
+                print("XML Exists -- Moving on")
+            else:
+                unsecured_temp_file = open('Data/XML/template/profile-xml-unsecured-template.xml', 'r')
+                xml_lines = unsecured_temp_file.readlines()
+                xml_lines[2] = "<name>" + item[0] + "</name>\n"
+                xml_lines[5] = "\t\t\t<name>" + item[0] + "</name>\n"
+                print(xml_lines[2])
+                xml_file_done = open(path, 'w')
+                xml_file_done.writelines(xml_lines)
+                xml_file_done.close()
+                command = 'netsh wlan add profile filename=\"' + path +  '\" interface=\"' + data[1] + '\"'
+                print(command)
+                os.system(command)
+        else:
+            print("At this time we are unable to attack secured drones!")
 
-                    for line in xml_lines:
-                        if "NEED_NAME" in line:
-                            line.replace("NEED_NAME", item[0])
-                    xml_file_done = open(path, 'w')
-                    xml_file_done.writelines(xml_lines)
-                    xml_file_done.close()
+        
 
+
+def read_data():
+    data = []
+    with open("Data/.data", "r") as datafile:
+        lines = datafile.readlines()
+        data.append(lines[0].strip())
+        data.append(lines[1].strip())
+        temp_list = lines[2][:-1].split('|')
+        tmp_list = []
+        for drones in temp_list:
+            working = drones.split(',')
+            tmp_list.append(working)
+        data.append(tmp_list)
+    return data
 
 init_setup()
+generate_XML()
