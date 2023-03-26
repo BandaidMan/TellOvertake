@@ -17,6 +17,8 @@ def read_data():
 def reconnect():
     data = read_data()
     network = data[0]
+    command = 'netsh wlan disconnect interface=\"' + data[1] + '\"';
+    os.system(command)
     command = 'netsh wlan connect name=\"' + network + '\" interface=\"' + data[1] + '\"'
     print(command)
     os.system(command)
