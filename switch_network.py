@@ -1,9 +1,6 @@
-#importing the necessary modules
 import subprocess
-import os
 
-#creating a blank list to store the output
-def init_setup():
+def network(): 
     wifi_interfaces = []
     wifi_interfaces2 = []
     wifi_networks = []
@@ -34,15 +31,7 @@ def init_setup():
             new_list.append(line)
             
     wifi_interfaces2 = new_list
-
-           
-
-    #for line in wifi_interfaces2:
-
-
     wifi_interfaces2 = wifi_interfaces2[0::2]
-
-
 
     for index in range(0, len(wifi_interfaces2), 2):
         tmp_list = [wifi_interfaces2[index], wifi_interfaces2[index+1]]
@@ -66,43 +55,15 @@ def init_setup():
     tello_networks.append(['TELLO-AC2C9F', 'Open'])
     tello_networks.append(['TELLO', 'Open'])
     print(tello_networks)
-    print(len(tello_networks))
 
-    for x in range(0, len(tello_networks)):
-        print("(" + str(x) + ")", tello_networks[x])
-    option = input("Which Tello do you prefer?: ")
-    with open("Data/.data", "w") as outfile:
-        outfile.write(tello_networks[x][0] + "\n")
+    current_network = ['TELLO-AC2C9F', 'Open']
 
-    for x in range(0, len(wifi_interfaces)):
-        print("(" + str(x) + ")", wifi_interfaces[x])
-        option = input("What interface do you prefer?: ")
-        with open("Data/.data", "a") as outfile:
-            outfile.write(wifi_interfaces[x] + "\n")
-    
-    data_line = ""
-    for x in tello_networks:
-        data_line = data_line + x[0] + "," + x[1] + "|"
-    with open("Data/.data", "a") as outfile:
-            outfile.write(data_line)
+    for i in range(0, len(tello_networks)): 
+        if i == len(tello_networks) - 1: 
+            new_network = current_network
+        else: 
+            if current_network == tello_networks[i]:
+                new_network = tello_networks[i + 1]
+    print(new_network)        
 
-def generate_XML():
-    test = [["Tello-42441", "Open"], "Tello-51883", "WPA2-Personal"]
-    for item in test:
-        if(item[1] == "Open"):
-            path = 'Data/XML/' + item[0] + '.xml'
-            if os.path.isfile(path):
-                print("XML Exists -- Moving on")
-            else:
-                unsecured_temp_file = open('Data/XML/profile-xml-unsecured-template.xml', 'r')
-                xml_lines = unsecured_temp_file.readlines()
-
-                for line in xml_lines:
-                    if "NEED_NAME" in line:
-                        line.replace("NEED_NAME", item[0])
-                xml_file_done = open(path, 'w')
-                xml_file_done.writelines(xml_lines)
-                xml_file_done.close()
-
-
-init_setup()
+network()
