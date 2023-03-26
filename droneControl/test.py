@@ -169,9 +169,7 @@ class FrontEnd(object):
 		if self.send_rc_control:
 			if self.joystickAvailable:
 				joystickVals = joystick.getControllerValues(self.joystickObject)
-				#print(joystickVals)
-				self.tello.send_rc_control(joystickVals[1], joystickVals[2],
-					joystickVals[0], joystickVals[3])
+				self.tello.send_rc_control(joystickVals[3],joystickVals[2],joystickVals[1],joystickVals[0])
 			else:
 				self.tello.send_rc_control(self.left_right_velocity, self.for_back_velocity,
 					self.up_down_velocity, self.yaw_velocity)
