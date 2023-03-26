@@ -3,7 +3,7 @@ import subprocess
 import os
 
 #creating a blank list to store the output
-function init_setup():
+def init_setup():
     wifi_interfaces = []
     wifi_interfaces2 = []
     wifi_networks = []
@@ -76,3 +76,32 @@ function init_setup():
 #printing out the list
 #print(wifi_interfaces2[4], wifi_interfaces2[6])
 #print(wifi_interfaces[0])
+
+
+def generate_XML():
+    ''''
+    Function generates the XML Files necessary for python to
+    connect the user to the tello drones.
+
+    It uses the unsecured template for Open security, and the
+    secured template for the WPA2-Personal security
+    '''
+    test = [["Tello-42441", "Open"], "Tello-51883", "WPA2-Personal"]
+    for item in test:
+        if(item[1] == "Open"):
+            path = 'Data/XML/' + item[0] + '.xml'
+            if os.path.isfile(path):
+                print("XML Exists -- Moving on")
+            else:
+                unsecured_temp_file = open('Data/XML/profile-xml-unsecured-template.xml', 'r')
+                xml_lines = unsecured_temp_file.readlines()
+
+                for line in xml_lines:
+                    if "NEED_NAME" in line:
+                        line.replace("NEED_NAME", item[0])
+                xml_file_done = open(path, 'w')
+                xml_file_done.writelines(xml_lines)
+                xml_file_done.close()
+
+
+generate_XML()
