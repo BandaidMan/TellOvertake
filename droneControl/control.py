@@ -163,13 +163,31 @@ class FrontEnd(object):
 	def update(self):
 		""" Update routine. Send velocities to Tello.
 		"""
+		joystickVals = None
 		if self.send_rc_control:
 			if self.joystickAvailable:
 				joystickVals = joystick.getControllerValues(self.joystickObject)
 				self.tello.send_rc_control(joystickVals[3],joystickVals[2],joystickVals[1],joystickVals[0])
+				self.extraFunctions(joystickVals)
+			
 			else:
 				self.tello.send_rc_control(self.left_right_velocity, self.for_back_velocity,
 					self.up_down_velocity, self.yaw_velocity)
+				
+	# Extra mappings to controller buttons
+	def extraFunctions(self, joystickArr):
+		if joystickArr[4] == 1:
+			self.tello.flip_forward()		
+
+		if joystickArr[11] == 1:
+			self.tello.takeoff()	
+		
+		if joystickArr[10] == 1:
+			self.tello.land()		
+		
+		if joystickArr[9] == 1:
+			self.tello.emergency()
+
 
 
 def main():
