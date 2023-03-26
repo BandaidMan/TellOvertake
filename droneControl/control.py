@@ -12,7 +12,6 @@ S = 60
 
 FPS = 120
 
-
 class FrontEnd(object):
 	""" Maintains the Tello display and moves it through the keyboard keys.
 		Press escape key to quit.
@@ -65,8 +64,6 @@ class FrontEnd(object):
 		else:
 			print("Joystick available, dual joystick and keyboard control enabled")
 			self.joystickAvailable = True
-
-		
 
 	def run(self):
 
@@ -177,12 +174,8 @@ class FrontEnd(object):
 
 def main():
 	frontend = FrontEnd()
-
 	# run frontend
-
 	frontend.run()
-
-	print("Return quit, either shutoff or error")
 
 if __name__ == '__main__':
 	main()
