@@ -88,4 +88,24 @@ def init_setup():
             outfile.write(data_line)
 #print(wifi_networks)
 #save_input_in_file()
+
+def generate_XML():
+    test = [["Tello-42441", "Open"], "Tello-51883", "WPA2-Personal"]
+        for item in test:
+            if(item[1] == "Open"):
+                path = 'Data/XML/' + item[0] + '.xml'
+                if os.path.isfile(path):
+                    print("XML Exists -- Moving on")
+                else:
+                    unsecured_temp_file = open('Data/XML/profile-xml-unsecured-template.xml', 'r')
+                    xml_lines = unsecured_temp_file.readlines()
+
+                    for line in xml_lines:
+                        if "NEED_NAME" in line:
+                            line.replace("NEED_NAME", item[0])
+                    xml_file_done = open(path, 'w')
+                    xml_file_done.writelines(xml_lines)
+                    xml_file_done.close()
+
+
 init_setup()
