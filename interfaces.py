@@ -20,7 +20,7 @@ def init_setup():
             os.remove(os.path.join("Data/XML/", item))
 
     wifi_interfaces = []
-    raw_raw_found_networks = []
+    raw_found_networks = []
     wifi_networks = []
 
     # Retrieve the wifi interfaces using the 'netsh wlan show interfaces' command
