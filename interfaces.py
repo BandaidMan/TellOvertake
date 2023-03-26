@@ -20,7 +20,7 @@ def init_setup():
             os.remove(os.path.join("Data/XML/", item))
 
     wifi_interfaces = []
-    wifi_interfaces2 = []
+    raw_raw_found_networks = []
     wifi_networks = []
 
     # Retrieve the wifi interfaces using the 'netsh wlan show interfaces' command
@@ -35,25 +35,25 @@ def init_setup():
 
     # Parse the output to extract the available wifi networks
     for line in output2.splitlines():
-        wifi_interfaces2.append(line.decode("utf-8"))
+        raw_found_networks.append(line.decode("utf-8"))
 
-    # Remove the first two elements from the wifi_interfaces2 list
+    # Remove the first two elements from the raw_found_networks list
     for x in range(0,2):
-        wifi_interfaces2.pop(x)
+        raw_found_networks.pop(x)
 
-    # Remove any empty lines and lines containing irrelevant information from the wifi_interfaces2 list
+    # Remove any empty lines and lines containing irrelevant information from the raw_found_networks list
     new_list = []
-    for line in wifi_interfaces2:
+    for line in raw_found_networks:
         if line.strip() != '' and 'name' not in line and 'currently visible' not in line:
             new_list.append(line)
-    wifi_interfaces2 = new_list
+    raw_found_networks = new_list
 
-    # Retrieve only the network names from the wifi_interfaces2 list
-    wifi_interfaces2 = wifi_interfaces2[0::2]
+    # Retrieve only the network names from the raw_found_networks list
+    raw_found_networks = raw_found_networks[0::2]
 
     # Combine the network names and their respective signal strengths into a list
-    for index in range(0, len(wifi_interfaces2), 2):
-        tmp_list = [wifi_interfaces2[index], wifi_interfaces2[index+1]]
+    for index in range(0, len(raw_found_networks), 2):
+        tmp_list = [raw_found_networks[index], raw_found_networks[index+1]]
         wifi_networks.append(tmp_list)
 
     # Parse the wifi network list to extract the names and signal strengths of the Tello networks
