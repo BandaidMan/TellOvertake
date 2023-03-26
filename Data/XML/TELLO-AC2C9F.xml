@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
-<name>TELLO-632C8C</name>
+<name>TELLO-AC2C9F</name>
 	<SSIDConfig>
 		<SSID>
-			<name>TELLO-632C8C</name>
+			<name>TELLO-AC2C9F</name>
 		</SSID>
 	</SSIDConfig>
 	<connectionType>ESS</connectionType>
