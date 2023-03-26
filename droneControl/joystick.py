@@ -1,22 +1,24 @@
 import pygame
 
 pygame.init()
+def discoverController():
+    # Find the first joystick
+    joystick = None
+    for i in range(pygame.joystick.get_count()):
+        j = pygame.joystick.Joystick(i)
+        j.init()
+        #print(f"Joystick {i}: {j.get_name()}")
+        if not joystick:
+            joystick = j
 
-# Find the first joystick
-joystick = None
-for i in range(pygame.joystick.get_count()):
-    j = pygame.joystick.Joystick(i)
-    j.init()
-    print(f"Joystick {i}: {j.get_name()}")
     if not joystick:
-        joystick = j
+        print("No joystick found!")
+        return None
+    return joystick
 
-if not joystick:
-    print("No joystick found!")
-    quit()
 
-# Main game loop
-while True:
+def getControllerValues(joystick):
+   
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quit()
@@ -28,7 +30,6 @@ while True:
     dpad_down = int(hat[1] == -1)
     dpad_left = int(hat[0] == -1)
     dpad_right = int(hat[0] == 1)
-
 
     # Read the joystick X and Y axes
     x_axis = joystick.get_axis(0)
@@ -48,13 +49,15 @@ while True:
     speed = int(speed * -100)
     yaw = int(yaw * 100)
 
-    if abs(x_axis) <= 10:
+    stick_drift = 10
+
+    if abs(x_axis) <= stick_drift:
         x_axis = 0
-    if abs(y_axis) <= 10:
+    if abs(y_axis) <= stick_drift:
         y_axis = 0
-    if abs(speed) <= 10:
+    if abs(speed) <= stick_drift:
         speed = 0
-    if abs(yaw) <= 10:
+    if abs(yaw) <= stick_drift:
         yaw = 0
     
     # Clamp the X and Y axis values to the range -100 to 100
@@ -62,6 +65,7 @@ while True:
     y_axis = max(-100, min(y_axis, 100))
     speed = max(-100, min(speed, 100))
     yaw = max(-100, min(yaw, 100))
-    
-    # Print the X and Y axis values
     print(f"X Axis: {x_axis} Y Axis: {y_axis} Speed: {speed} Yaw: {yaw} D-Pad Up: {dpad_up} D-Pad Down: {dpad_down} D-Pad Left: {dpad_left} D-Pad Right: {dpad_right} A: {a_button} B: {b_button} X: {x_button} Y: {y_button}")
+
+    # Print the X and Y axis values
+    #print(f"X Axis: {x_axis} Y Axis: {y_axis} Speed: {speed} Yaw: {yaw} D-Pad Up: {dpad_up} D-Pad Down: {dpad_down} D-Pad Left: {dpad_left} D-Pad Right: {dpad_right} A: {a_button} B: {b_button} X: {x_button} Y: {y_button}")
