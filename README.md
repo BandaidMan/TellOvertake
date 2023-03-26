@@ -17,6 +17,7 @@ The Xbox controller interface is used to control the hijacked drone. The interfa
 
 To use this project, you will need a drone that is compatible with the hijacking software, an Xbox controller or keyboard, and a laptop. The project is intended for educational and research purposes only and should not be used for any illegal or malicious activities.
 
+
 ### Project Goals
 
 The main goals of this project are:
@@ -30,8 +31,11 @@ The main goals of this project are:
 * Pygame
 
 ### Future Expansions
-* Add ability to crack into WPA-2 password secured drones
-* Change password to lock original user out of the drone
+* To deauthenticate users at time of connection to the Tello Wifi to disable all access from the user to the device
+* To add functionality using aircrack-ng and airdump-ng to break the WPA2-Personal encryption on the device.
+* Add functionality to add password when requested to device to keep users from attampting to reconnect while maintaining control.
+* Include Linux functionality
+
 
 ## Group Information
 Aditya Dindi - BBA Cybersecurity - Sophomore
