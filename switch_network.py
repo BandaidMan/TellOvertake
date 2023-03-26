@@ -1,69 +1,38 @@
-import subprocess
+def read_data():
+    data = []
+    with open("Data/.data", "r") as datafile:
+        lines = datafile.readlines()
+        data.append(lines[0].strip())
+        data.append(lines[1].strip())
+        temp_list = lines[2][:-1].split('|')
+        tmp_list = []
+        for drones in temp_list:
+            working = drones.split(',')
+            tmp_list.append(working)
+        data.append(tmp_list)
+    return data
 
-def network(): 
-    wifi_interfaces = []
-    wifi_interfaces2 = []
-    wifi_networks = []
+def switch_network():
+    data = read_data()
+    curr_network = data[0]
+    networks = data[2]
+    interface = data[1]
+    if len(networks) == 1:
+        os.system("py reconnect.py")
+    else:
+        curr_index = 0
+        network_length = len(networks)
+        for index in range(0, network_length):
+            if networks[index] == curr_network:
+                curr_index = 0
 
-    #running the command to get the wifi interfaces
-    #output = subprocess.check_output(["ipconfig"])
-    #output = subprocess.check_output(["netsh wlan show interfaces"])
-    output = subprocess.check_output("netsh wlan show interfaces")
-    output2 = subprocess.check_output("netsh wlan show networks")
-    #print(repr(output))
-    #print(output)
-
-    for line in output.splitlines():
-        if "Name" in str(line): 
-            wifi_interfaces.append(line.decode("utf-8").strip().split(": ")[1])
-
-    for line in output2.splitlines():
-        #print(line.decode("utf-8"))
-        wifi_interfaces2.append(line.decode("utf-8"))
-
-    for x in range(0,2):
-        wifi_interfaces2.pop(x)
-
-       #wifi_interfaces2.append(line.decode("utf-8").strip().split(": ")[1])
-    new_list = []
-    for line in wifi_interfaces2:
-        if line.strip() != '' and 'name' not in line and 'currently visible' not in line:
-            new_list.append(line)
-            
-    wifi_interfaces2 = new_list
-    wifi_interfaces2 = wifi_interfaces2[0::2]
-
-    for index in range(0, len(wifi_interfaces2), 2):
-        tmp_list = [wifi_interfaces2[index], wifi_interfaces2[index+1]]
-        wifi_networks.append(tmp_list)
-
-    for line in wifi_networks:
-        line[0] = (line[0].split()[3])
-        line[1] = (line[1].strip()[26:30])
-
-    tello_networks = []
-    for line in wifi_networks: #Get all the TELLO Networks and add them to the tello_networks list
-        if "TELLO" in line[0]:
-            tello_networks.append(line)
-
-    tmp_list = []
-    for item in tello_networks:
-        if item not in tmp_list:
-            tmp_list.append(item)
-
-    tello_networks = tmp_list
-    tello_networks.append(['TELLO-AC2C9F', 'Open'])
-    tello_networks.append(['TELLO', 'Open'])
-    print(tello_networks)
-
-    current_network = ['TELLO-AC2C9F', 'Open']
-
-    for i in range(0, len(tello_networks)): 
-        if i == len(tello_networks) - 1: 
-            new_network = current_network
-        else: 
-            if current_network == tello_networks[i]:
-                new_network = tello_networks[i + 1]
-    print(new_network)        
-
-network()
+        curr_index = curr_index + 1
+        if(curr_index >= len(networks)):
+            curr_index = 0
+    new_network = networks[curr_index]
+    data[0] = new_network
+    os.remove("Data/.data")
+    with open("Data/.data", "w") as datafile:
+        datafile.writelines(data)
+        datafile.close()
+        os.system('py reconnect.py')
