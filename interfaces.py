@@ -80,7 +80,8 @@ def init_setup():
         print("(" + str(x) + ")", tello_networks[x])
     option = input("Which Tello do you prefer?: ")
     with open("Data/.data", "w") as outfile:
-        outfile.write(tello_networks[x][0] + "\n")
+        outfile.write(tello_networks[int(option)][0] + "\n")
+    print(tello_networks[int(option)][0])
 
     for x in range(0, len(wifi_interfaces)):
         print("(" + str(x) + ")", wifi_interfaces[x])
