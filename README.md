@@ -7,6 +7,9 @@ TellOvertake is a drone hijacking program designed for Tello drones.
 
 ## Project Information
 
+### Installation
+After downloading the git repository, and installing all necessary dependants just run the manage.py script.
+
 ### Description
 
 This project is a proof-of-concept demonstration of hijacking a drone and controlling it with an Xbox controller. The goal is to highlight the potential security vulnerabilities that exist in drones and the importance of addressing them.
@@ -36,6 +39,8 @@ The main goals of this project are:
 * Add functionality to add password when requested to device to keep users from attampting to reconnect while maintaining control.
 * Include Linux functionality
 
+### Liability
+* We are not authorized for any misuse of this software. The software should only be used on authorized devices and with the permission of device owners. We do not condone malicous activity or any malicous actions done with this software.
 
 ## Group Information
 Aditya Dindi - BBA Cybersecurity - Sophomore
