@@ -1,3 +1,5 @@
+import os
+
 def read_data():
     data = []
     with open("Data/.data", "r") as datafile:
@@ -17,6 +19,7 @@ def switch_network():
     curr_network = data[0]
     networks = data[2]
     interface = data[1]
+    curr_index = 0
     if len(networks) == 1:
         os.system("py reconnect.py")
     else:
@@ -33,6 +36,9 @@ def switch_network():
     data[0] = new_network
     os.remove("Data/.data")
     with open("Data/.data", "w") as datafile:
-        datafile.writelines(data)
+        datafile.writelines(str(data))
         datafile.close()
         os.system('py reconnect.py')
+
+
+switch_network()
