@@ -89,8 +89,19 @@ class FrontEnd(object):
 			frame = frame_read.frame
 
 			# Make a blank window from pygame
-   
-   
+			# battery n. 电池
+			text = "Battery: {}%".format(self.tello.get_battery())
+			cv2.putText(frame, text, (5, 720 - 5),
+				cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+			frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+			frame = np.rot90(frame)
+			frame = np.flipud(frame)
+
+			frame = pygame.surfarray.make_surface(frame)
+			self.screen.blit(frame, (0, 0))
+			pygame.display.update()
+
+
 			# End here
 
 			time.sleep(1 / FPS)

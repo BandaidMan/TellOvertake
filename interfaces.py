@@ -131,10 +131,7 @@ def generate_XML():
                 os.system(command)
         else:
             # Print a message indicating that the network is not open
-            print("At this time we are unable to attack secured drones!")```
-
-        
-
+            print("At this time we are unable to attack secured drones!")
 
 def read_data():
     # create an empty list to store the data read from the file
