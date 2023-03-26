@@ -3,7 +3,7 @@ import subprocess
 import os
 
 #creating a blank list to store the output
-function init_setup():
+def init_setup():
     wifi_interfaces = []
     wifi_interfaces2 = []
     wifi_networks = []
@@ -15,10 +15,6 @@ function init_setup():
     output2 = subprocess.check_output("netsh wlan show networks")
     #print(repr(output))
     #print(output)
-    '''
-    with open("output.txt", "w") as outfile:
-        outfile.write(str(output))
-    '''
 
     for line in output.splitlines():
         if "Name" in str(line): 
@@ -68,11 +64,28 @@ function init_setup():
             tmp_list.append(item)
 
     tello_networks = tmp_list
-
+    tello_networks.append(['TELLO-AC2C9F', 'Open'])
+    tello_networks.append(['TELLO', 'Open'])
     print(tello_networks)
+    print(len(tello_networks))
 
+    for x in range(0, len(tello_networks)):
+        print("(" + str(x) + ")", tello_networks[x])
+    option = input("Which Tello do you prefer?: ")
+    with open("Data/.data", "w") as outfile:
+        outfile.write(tello_networks[x][0] + "\n")
+
+    for x in range(0, len(wifi_interfaces)):
+        print("(" + str(x) + ")", wifi_interfaces[x])
+        option = input("What interface do you prefer?: ")
+        with open("Data/.data", "a") as outfile:
+            outfile.write(wifi_interfaces[x] + "\n")
+    
+    data_line = ""
+    for x in tello_networks:
+        data_line = data_line + x[0] + "," + x[1] + "|"
+    with open("Data/.data", "a") as outfile:
+            outfile.write(data_line)
 #print(wifi_networks)
-
-#printing out the list
-#print(wifi_interfaces2[4], wifi_interfaces2[6])
-#print(wifi_interfaces[0])
+#save_input_in_file()
+init_setup()
